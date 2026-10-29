@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.iptvtv.model.Channel
 import com.iptvtv.model.ChannelSource
+import com.iptvtv.ui.about.CreatedByScreen
 import com.iptvtv.ui.browse.CategoriesScreen
 import com.iptvtv.ui.browse.ChannelGridScreen
 import com.iptvtv.ui.browse.CountriesScreen
@@ -46,6 +47,9 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
         }
         composable<SettingsRoute> {
             MainScaffold(Tab.Settings, selectTab) { SettingsScreen() }
+        }
+        composable<CreatedByRoute> {
+            MainScaffold(Tab.CreatedBy, selectTab) { CreatedByScreen() }
         }
         composable<GridRoute> {
             ChannelGridScreen(onPlay = play)

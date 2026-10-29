@@ -11,6 +11,7 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -35,6 +36,7 @@ enum class Tab(val label: String, val icon: ImageVector, val route: Any) {
     Countries("Countries", Icons.Default.Place, CountriesRoute),
     Categories("Categories", Icons.AutoMirrored.Filled.List, CategoriesRoute),
     Settings("Settings", Icons.Default.Settings, SettingsRoute),
+    CreatedBy("Created By", Icons.Default.Person, CreatedByRoute),
 }
 
 /** Collapsed icon rail on the left that expands over the content on focus, like Netflix on TV. */

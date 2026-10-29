@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable object CountriesRoute
 @Serializable object CategoriesRoute
 @Serializable object SettingsRoute
+@Serializable object CreatedByRoute
 
 /** "See all" grid. [source] is an encoded [com.iptvtv.model.ChannelSource]. */
 @Serializable data class GridRoute(val source: String, val title: String)

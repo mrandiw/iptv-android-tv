@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -64,11 +65,22 @@ fun PlayerScreen() {
     // Each key press bumps this, which restarts the auto-hide timer.
     var overlayTick by remember { mutableIntStateOf(1) }
     var overlayVisible by remember { mutableStateOf(true) }
+    var secondsLeft by remember { mutableIntStateOf(15) }
 
     LaunchedEffect(overlayTick, state.channel?.id) {
         overlayVisible = true
         delay(OVERLAY_MILLIS)
         overlayVisible = false
+    }
+
+    LaunchedEffect(state.buffering, state.channel?.id, state.streamIndex) {
+        if (state.buffering && state.error == null) {
+            secondsLeft = 15
+            while (secondsLeft > 0) {
+                delay(1000L)
+                secondsLeft--
+            }
+        }
     }
     LifecycleEventEffect(Lifecycle.Event.ON_STOP) { vm.player.pause() }
     LifecycleEventEffect(Lifecycle.Event.ON_START) { vm.player.play() }
@@ -106,7 +118,35 @@ fun PlayerScreen() {
         )
 
         if (state.buffering && state.error == null) {
-            Spinner(Modifier.align(Alignment.Center), size = 56.dp)
+            Column(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .background(Color.Black.copy(alpha = 0.75f), RoundedCornerShape(16.dp))
+                    .padding(horizontal = 32.dp, vertical = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(14.dp),
+            ) {
+                Spinner(size = 48.dp)
+                Text(
+                    text = if (secondsLeft > 0) {
+                        "Connecting stream... (${secondsLeft}s)"
+                    } else {
+                        "Still connecting, please wait..."
+                    },
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.White,
+                )
+                Text(
+                    text = if (state.streams.size > 1) {
+                        "Source ${state.streamIndex + 1} of ${state.streams.size} • Please wait up to 15 seconds"
+                    } else {
+                        "Please wait up to 15 seconds while the live stream connects"
+                    },
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = IptvColors.TextSecondary,
+                )
+            }
         }
 
         state.error?.let { message ->

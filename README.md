@@ -33,8 +33,9 @@ Rules:
 ## Features
 
 - Home: hero banner of the focused channel + rows ("Live in Indonesia", then categories).
-- Left navigation rail: Search, Home, Countries, Categories, Settings.
-- Player: Media3 ExoPlayer (HLS + DASH). ▲/▼ or CH+/CH− switches channel.
+- Left navigation rail: Search, Home, Countries, Categories, Settings, Created By.
+- Player: Media3 ExoPlayer (HLS + DASH). ▲/▼ or CH+/CH− switches channel, with a 15-second loading countdown indicator while streams connect.
+- Created By: Developer profile with quick links to GitHub ([iptv-android-tv](https://github.com/mrandiw/iptv-android-tv)) and Instagram ([@codewithandiw](https://www.instagram.com/codewithandiw/)).
 - Adult (NSFW) channels are visible but locked behind a 4-digit PIN.
   Default PIN is **0000**, change it in Settings. Unlock lasts until the app is closed.
 
@@ -57,7 +58,7 @@ Single module, MVVM, manual DI (`AppContainer`).
 
 ## Build
 
-Requirements: Android Studio (latest stable), JDK 17+, Android SDK 36.
+Requirements: Android Studio (latest stable), JDK 17+ (Android Studio's bundled JDK works), Android SDK 37.
 
 1. Open this folder in Android Studio and let Gradle sync.
 2. Create an Android TV emulator (Device Manager → TV → 1080p), or connect a TV with ADB.

@@ -1,5 +1,8 @@
 package com.iptvtv.ui.settings
 
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -117,6 +121,42 @@ fun SettingsScreen() {
             },
         ) {
             Button(onClick = { vm.refresh() }, enabled = sync !is SyncState.Running) { Text("Update now") }
+        }
+
+        val context = LocalContext.current
+
+        Section(
+            "Created By",
+            "IPTV for Android TV was created by mrandiw.\n" +
+                "GitHub: https://github.com/mrandiw/iptv-android-tv\n" +
+                "Instagram: https://www.instagram.com/codewithandiw/",
+        ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Button(onClick = {
+                    try {
+                        context.startActivity(
+                            Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/mrandiw/iptv-android-tv"))
+                                .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) },
+                        )
+                    } catch (_: Exception) {
+                        Toast.makeText(context, "https://github.com/mrandiw/iptv-android-tv", Toast.LENGTH_LONG).show()
+                    }
+                }) {
+                    Text("GitHub")
+                }
+                Button(onClick = {
+                    try {
+                        context.startActivity(
+                            Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/codewithandiw/"))
+                                .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) },
+                        )
+                    } catch (_: Exception) {
+                        Toast.makeText(context, "https://www.instagram.com/codewithandiw/", Toast.LENGTH_LONG).show()
+                    }
+                }) {
+                    Text("Instagram")
+                }
+            }
         }
 
         Section(
